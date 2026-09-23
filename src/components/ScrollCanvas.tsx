@@ -1,6 +1,12 @@
 import { useEffect, useRef } from 'react';
 
-export function ScrollCanvas({ frameCount = 300 }: { frameCount?: number }) {
+// 1. Define the props to accept the progress function
+interface ScrollCanvasProps {
+    frameCount?: number;
+    onProgress?: (progress: number) => void;
+}
+
+export function ScrollCanvas({ frameCount = 300, onProgress }: ScrollCanvasProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
     useEffect(() => {
@@ -10,43 +16,10 @@ export function ScrollCanvas({ frameCount = 300 }: { frameCount?: number }) {
         const context = canvas.getContext('2d', { alpha: false });
         if (!context) return;
 
+        let loadedCount = 0;
         const images: HTMLImageElement[] = [];
 
-        for (let i = 0; i < frameCount; i++) {
-            const img = new Image();
-            img.src = `/frames-webp/Frame_${i.toString().padStart(8, '0')}.webp`;
-            img.decode().catch(() => { });
-            images.push(img);
-        }
-
-        let scrollTarget = 0;
-        let scrollCurrent = 0;
-        let animationFrameId: number;
-
-        const handleResize = () => {
-            const dpr = window.devicePixelRatio || 1;
-            const rect = canvas.parentElement?.getBoundingClientRect() || { width: window.innerWidth, height: window.innerHeight };
-            canvas.width = rect.width * dpr;
-            canvas.height = rect.height * dpr;
-        };
-
-        const updateScrollTarget = () => {
-            // Find the h-[400vh] wrapper that contains this canvas
-            const wrapper = canvas.parentElement?.parentElement;
-            if (!wrapper) return;
-
-            // Calculate progress strictly within this wrapper, ignoring the rest of the page
-            const rect = wrapper.getBoundingClientRect();
-            const maxScroll = wrapper.scrollHeight - window.innerHeight;
-
-            // rect.top goes negative as we scroll down. 
-            // We clamp between 0 and 1 so it stops exactly at the last frame when the section ends.
-            const scrollProgress = -rect.top;
-            const fraction = Math.max(0, Math.min(1, scrollProgress / maxScroll));
-
-            scrollTarget = fraction * (frameCount);
-        };
-
+        // We moved this up so it can be called the moment the first frame loads
         const drawImageCover = (img: HTMLImageElement) => {
             if (!img || !img.complete || img.naturalWidth === 0) return;
 
@@ -67,6 +40,53 @@ export function ScrollCanvas({ frameCount = 300 }: { frameCount?: number }) {
             context.drawImage(img, 0, 0, iw, ih, dx, dy, dw, dh);
         };
 
+        // 2. Preload loop with progress tracking
+        for (let i = 0; i < frameCount; i++) {
+            const img = new Image();
+            img.src = `/frames-webp/Frame_${i.toString().padStart(8, '0')}.webp`;
+
+            img.onload = () => {
+                loadedCount++;
+
+                // Fire the progress prop back to App.tsx
+                if (onProgress) {
+                    onProgress((loadedCount / frameCount) * 100);
+                }
+
+                // Draw the very first frame immediately so the background isn't blank
+                if (i === 0) {
+                    drawImageCover(img);
+                }
+            };
+
+            img.decode().catch(() => { });
+            images.push(img);
+        }
+
+        let scrollTarget = 0;
+        let scrollCurrent = 0;
+        let animationFrameId: number;
+
+        const handleResize = () => {
+            const dpr = window.devicePixelRatio || 1;
+            const rect = canvas.parentElement?.getBoundingClientRect() || { width: window.innerWidth, height: window.innerHeight };
+            canvas.width = rect.width * dpr;
+            canvas.height = rect.height * dpr;
+        };
+
+        const updateScrollTarget = () => {
+            const wrapper = canvas.parentElement?.parentElement;
+            if (!wrapper) return;
+
+            const rect = wrapper.getBoundingClientRect();
+            const maxScroll = wrapper.scrollHeight - window.innerHeight;
+
+            const scrollProgress = -rect.top;
+            const fraction = Math.max(0, Math.min(1, scrollProgress / maxScroll));
+
+            scrollTarget = fraction * (frameCount);
+        };
+
         const render = () => {
             scrollCurrent += (scrollTarget - scrollCurrent) * 0.15;
             const frameIndex = Math.min(frameCount - 1, Math.max(0, Math.round(scrollCurrent)));
@@ -78,8 +98,6 @@ export function ScrollCanvas({ frameCount = 300 }: { frameCount?: number }) {
 
         handleResize();
         updateScrollTarget();
-
-        images[0].onload = () => drawImageCover(images[0]);
         render();
 
         window.addEventListener('resize', handleResize);
@@ -90,7 +108,7 @@ export function ScrollCanvas({ frameCount = 300 }: { frameCount?: number }) {
             window.removeEventListener('scroll', updateScrollTarget);
             cancelAnimationFrame(animationFrameId);
         };
-    }, [frameCount]);
+    }, [frameCount, onProgress]); // Added onProgress to dependency array
 
     return (
         <canvas
