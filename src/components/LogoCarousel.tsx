@@ -1,8 +1,6 @@
-import { motion } from "framer-motion";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 export function LogoCarousel() {
-    // Array of technologies matching the reference image
     const techStack = [
         {
             name: "GitHub",
@@ -52,16 +50,24 @@ export function LogoCarousel() {
         }
     ];
 
-    // Double the array so it can loop seamlessly
-    const duplicatedStack = [...techStack, ...techStack];
+    // Create enough duplicates to ensure it never runs out of screen space
+    const duplicatedStack = [...techStack, ...techStack, ...techStack];
 
     return (
-        <section className="relative w-full max-w-[1400px] mx-auto py-16 px-6 md:px-12 bg-black">
+        <section className="relative w-full max-w-[1400px] mx-auto py-16 px-6 md:px-12 bg-[#050505]">
+            <style>{`
+                @keyframes seamless-marquee {
+                    0% { transform: translateX(0); }
+                    100% { transform: translateX(calc(-100% / 3)); }
+                }
+                .animate-seamless {
+                    animation: seamless-marquee 20s linear infinite;
+                }
+            `}</style>
 
             {/* Header Section */}
             <div className="mb-10">
                 <div className="flex items-center gap-4 mb-2">
-                    {/* Gold 4-point star icon */}
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-[#cda47b]">
                         <path d="M12 1L14.5 9.5L23 12L14.5 14.5L12 23L9.5 14.5L1 12L9.5 9.5L12 1Z" fill="currentColor" />
                     </svg>
@@ -75,9 +81,9 @@ export function LogoCarousel() {
             </div>
 
             {/* Carousel Container Box */}
-            <div className="relative w-full border border-zinc-800 bg-[#050505] rounded-2xl py-8 px-4 md:px-8 flex items-center justify-between shadow-2xl overflow-hidden">
+            <div className="relative w-full border border-zinc-800/80 bg-[#0a0a0a]/50 rounded-2xl py-8 px-4 md:px-8 flex items-center justify-between shadow-2xl overflow-hidden">
 
-                {/* Left Navigation Arrow (Lucide Icon) */}
+                {/* Left Navigation Arrow */}
                 <button className="hidden md:flex shrink-0 w-10 h-10 rounded-full border border-zinc-700 items-center justify-center text-zinc-400 hover:text-white hover:border-zinc-500 transition-all bg-black z-20">
                     <ChevronLeft size={20} />
                 </button>
@@ -85,18 +91,10 @@ export function LogoCarousel() {
                 {/* Masking gradients to fade out the edges smoothly */}
                 <div className="relative flex w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
 
-                    {/* Framer Motion Auto-Scrolling Marquee */}
-                    <motion.div
-                        className="flex items-center gap-16 md:gap-24 pr-16 md:pr-24 w-max"
-                        animate={{ x: ["0%", "-50%"] }}
-                        transition={{
-                            ease: "linear",
-                            duration: 20,
-                            repeat: Infinity
-                        }}
-                    >
+                    {/* Native CSS Marquee - Perfectly calculates 1/3 translation for a triple array */}
+                    <div className="flex w-max animate-seamless">
                         {duplicatedStack.map((tech, index) => (
-                            <div key={index} className="flex flex-col items-center justify-center gap-4 group">
+                            <div key={`logo-${index}`} className="flex flex-col items-center justify-center gap-4 group w-32 md:w-48 flex-shrink-0">
                                 <div className="text-zinc-400 group-hover:text-white transition-colors duration-300">
                                     {tech.icon}
                                 </div>
@@ -105,16 +103,15 @@ export function LogoCarousel() {
                                 </span>
                             </div>
                         ))}
-                    </motion.div>
+                    </div>
 
                 </div>
 
-                {/* Right Navigation Arrow (Lucide Icon) */}
+                {/* Right Navigation Arrow */}
                 <button className="hidden md:flex shrink-0 w-10 h-10 rounded-full border border-zinc-700 items-center justify-center text-zinc-400 hover:text-white hover:border-zinc-500 transition-all bg-black z-20">
                     <ChevronRight size={20} />
                 </button>
             </div>
-
         </section>
     );
 }
