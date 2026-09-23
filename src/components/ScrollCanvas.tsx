@@ -14,7 +14,7 @@ export function ScrollCanvas({ frameCount = 300 }: { frameCount?: number }) {
 
         for (let i = 0; i < frameCount; i++) {
             const img = new Image();
-            img.src = `/frames/Frame_${i.toString().padStart(8, '0')}.png`;
+            img.src = `/frames-webp/Frame_${i.toString().padStart(8, '0')}.webp`;
             img.decode().catch(() => { });
             images.push(img);
         }
@@ -44,7 +44,7 @@ export function ScrollCanvas({ frameCount = 300 }: { frameCount?: number }) {
             const scrollProgress = -rect.top;
             const fraction = Math.max(0, Math.min(1, scrollProgress / maxScroll));
 
-            scrollTarget = fraction * (frameCount - 1);
+            scrollTarget = fraction * (frameCount);
         };
 
         const drawImageCover = (img: HTMLImageElement) => {

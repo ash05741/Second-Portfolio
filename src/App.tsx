@@ -8,12 +8,12 @@ function App() {
   return (
     <div className="bg-black text-white font-sans selection:bg-purple-500/30">
 
-      {/* The animation track (400vh) is now isolated here */}
+      {/* The animation track (400vh) is isolated here */}
       <div className="relative h-[400vh]">
 
         {/* Sticky Container for Canvas and UI */}
         <div className="sticky top-0 w-full h-screen overflow-hidden flex flex-col">
-          <ScrollCanvas frameCount={300} />
+          <ScrollCanvas />
 
           {/* Cinematic Left Shadow for Text Readability */}
           <div className="absolute top-0 left-0 w-[55vw] h-full bg-gradient-to-r from-black/80 via-black/30 to-transparent z-[5] pointer-events-none" />
