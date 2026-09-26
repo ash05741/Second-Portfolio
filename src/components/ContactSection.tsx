@@ -16,11 +16,11 @@ export function ContactSection() {
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-[#cda47b]">
                         <path d="M12 1L14.5 9.5L23 12L14.5 14.5L12 23L9.5 14.5L1 12L9.5 9.5L12 1Z" fill="currentColor" />
                     </svg>
-                    <h2 className="text-2xl md:text-3xl font-serif text-zinc-200 tracking-widest uppercase">
+                    <h2 style={{ fontFamily: "'Cinzel', serif" }} className="text-2xl md:text-3xl text-zinc-200 tracking-widest uppercase">
                         Get In Touch
                     </h2>
                 </div>
-                <p className="text-zinc-500 text-sm ml-10">
+                <p style={{ fontFamily: "'Cormorant Garamond', serif" }} className="text-zinc-500 text-sm md:text-base ml-10">
                     Let's build something great together.
                 </p>
             </div>
@@ -39,8 +39,8 @@ export function ContactSection() {
                                     <Mail size={20} />
                                 </div>
                                 <div className="flex flex-col transition-transform duration-300 group-hover:translate-x-1">
-                                    <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-zinc-500 group-hover:text-[#cda47b] transition-colors">Email</span>
-                                    <span className="text-sm font-medium text-zinc-200 mt-0.5 group-hover:text-white transition-colors">asmitshukla@example.com</span>
+                                    <span style={{ fontFamily: "'JetBrains Mono', monospace" }} className="text-[10px] uppercase tracking-[0.25em] text-zinc-500 group-hover:text-[#cda47b] transition-colors">Email</span>
+                                    <span style={{ fontFamily: "'Cormorant Garamond', serif" }} className="text-base font-medium text-zinc-200 mt-0.5 group-hover:text-white transition-colors">asmitshukla@example.com</span>
                                 </div>
                             </a>
 
@@ -50,8 +50,8 @@ export function ContactSection() {
                                     <MapPin size={20} />
                                 </div>
                                 <div className="flex flex-col transition-transform duration-300 group-hover:translate-x-1">
-                                    <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-zinc-500 group-hover:text-[#cda47b] transition-colors">Location</span>
-                                    <span className="text-sm font-medium text-zinc-200 mt-0.5 group-hover:text-white transition-colors">Shahjahanpur, India</span>
+                                    <span style={{ fontFamily: "'JetBrains Mono', monospace" }} className="text-[10px] uppercase tracking-[0.25em] text-zinc-500 group-hover:text-[#cda47b] transition-colors">Location</span>
+                                    <span style={{ fontFamily: "'Cormorant Garamond', serif" }} className="text-base font-medium text-zinc-200 mt-0.5 group-hover:text-white transition-colors">Shahjahanpur, India</span>
                                 </div>
                             </div>
 
@@ -63,8 +63,8 @@ export function ContactSection() {
                                     </svg>
                                 </div>
                                 <div className="flex flex-col transition-transform duration-300 group-hover:translate-x-1">
-                                    <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-zinc-500 group-hover:text-[#cda47b] transition-colors">LinkedIn</span>
-                                    <span className="text-sm font-medium text-zinc-200 mt-0.5 group-hover:text-white transition-colors">/in/asmit-shukla-2a8591258/</span>
+                                    <span style={{ fontFamily: "'JetBrains Mono', monospace" }} className="text-[10px] uppercase tracking-[0.25em] text-zinc-500 group-hover:text-[#cda47b] transition-colors">LinkedIn</span>
+                                    <span style={{ fontFamily: "'JetBrains Mono', monospace" }} className="text-sm font-medium text-zinc-200 mt-0.5 group-hover:text-white transition-colors">/in/asmit-shukla-2a8591258/</span>
                                 </div>
                             </a>
 
@@ -76,8 +76,8 @@ export function ContactSection() {
                                     </svg>
                                 </div>
                                 <div className="flex flex-col transition-transform duration-300 group-hover:translate-x-1">
-                                    <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-zinc-500 group-hover:text-[#cda47b] transition-colors">GitHub</span>
-                                    <span className="text-sm font-medium text-zinc-200 mt-0.5 group-hover:text-white transition-colors">ash05741</span>
+                                    <span style={{ fontFamily: "'JetBrains Mono', monospace" }} className="text-[10px] uppercase tracking-[0.25em] text-zinc-500 group-hover:text-[#cda47b] transition-colors">GitHub</span>
+                                    <span style={{ fontFamily: "'JetBrains Mono', monospace" }} className="text-sm font-medium text-zinc-200 mt-0.5 group-hover:text-white transition-colors">ash05741</span>
                                 </div>
                             </a>
                         </div>
@@ -89,37 +89,40 @@ export function ContactSection() {
 
                             {/* Inputs with Focus Glow */}
                             <div className="flex flex-col gap-2 group">
-                                <label className="text-[10px] font-mono uppercase tracking-[0.25em] text-zinc-400 group-focus-within:text-[#cda47b] transition-colors">Name</label>
+                                <label style={{ fontFamily: "'JetBrains Mono', monospace" }} className="text-[10px] uppercase tracking-[0.25em] text-zinc-400 group-focus-within:text-[#cda47b] transition-colors">Name</label>
                                 <input
+                                    style={{ fontFamily: "'Cormorant Garamond', serif" }}
                                     type="text"
                                     placeholder="Your name"
                                     value={formData.name}
                                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                    className="w-full bg-[#050505] border border-zinc-800 rounded-xl px-4 py-3.5 text-sm text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-[#cda47b] focus:shadow-[0_0_15px_rgba(205,164,123,0.15)] transition-all shadow-inner"
+                                    className="w-full bg-[#050505] border border-zinc-800 rounded-xl px-4 py-3.5 text-base text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-[#cda47b] focus:shadow-[0_0_15px_rgba(205,164,123,0.15)] transition-all shadow-inner"
                                     required
                                 />
                             </div>
 
                             <div className="flex flex-col gap-2 group">
-                                <label className="text-[10px] font-mono uppercase tracking-[0.25em] text-zinc-400 group-focus-within:text-[#cda47b] transition-colors">Email</label>
+                                <label style={{ fontFamily: "'JetBrains Mono', monospace" }} className="text-[10px] uppercase tracking-[0.25em] text-zinc-400 group-focus-within:text-[#cda47b] transition-colors">Email</label>
                                 <input
+                                    style={{ fontFamily: "'Cormorant Garamond', serif" }}
                                     type="email"
                                     placeholder="you@example.com"
                                     value={formData.email}
                                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                    className="w-full bg-[#050505] border border-zinc-800 rounded-xl px-4 py-3.5 text-sm text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-[#cda47b] focus:shadow-[0_0_15px_rgba(205,164,123,0.15)] transition-all shadow-inner"
+                                    className="w-full bg-[#050505] border border-zinc-800 rounded-xl px-4 py-3.5 text-base text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-[#cda47b] focus:shadow-[0_0_15px_rgba(205,164,123,0.15)] transition-all shadow-inner"
                                     required
                                 />
                             </div>
 
                             <div className="flex flex-col gap-2 group">
-                                <label className="text-[10px] font-mono uppercase tracking-[0.25em] text-zinc-400 group-focus-within:text-[#cda47b] transition-colors">Message</label>
+                                <label style={{ fontFamily: "'JetBrains Mono', monospace" }} className="text-[10px] uppercase tracking-[0.25em] text-zinc-400 group-focus-within:text-[#cda47b] transition-colors">Message</label>
                                 <textarea
+                                    style={{ fontFamily: "'Cormorant Garamond', serif" }}
                                     rows={4}
                                     placeholder="Your message..."
                                     value={formData.message}
                                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                                    className="w-full bg-[#050505] border border-zinc-800 rounded-xl px-4 py-3.5 text-sm text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-[#cda47b] focus:shadow-[0_0_15px_rgba(205,164,123,0.15)] transition-all resize-none shadow-inner"
+                                    className="w-full bg-[#050505] border border-zinc-800 rounded-xl px-4 py-3.5 text-base text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-[#cda47b] focus:shadow-[0_0_15px_rgba(205,164,123,0.15)] transition-all resize-none shadow-inner"
                                     required
                                 />
                             </div>
@@ -128,7 +131,7 @@ export function ContactSection() {
                                 type="submit"
                                 className="w-full flex items-center justify-center gap-2 py-4 rounded-xl bg-[#12100d] border border-[#cda47b]/40 text-xs tracking-[0.2em] uppercase font-medium text-[#cda47b] hover:bg-[#cda47b] hover:text-black hover:shadow-[0_0_20px_rgba(205,164,123,0.4)] transition-all duration-300 group cursor-pointer mt-2"
                             >
-                                <span>Send Message</span>
+                                <span style={{ fontFamily: "'Cinzel', serif" }} className="font-bold">Send Message</span>
                                 <Send size={14} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                             </button>
 
