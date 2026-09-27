@@ -1,94 +1,101 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Home, User, Sparkles } from 'lucide-react';
+import { Sun, Moon, Menu } from 'lucide-react';
 
 export function Navigation() {
     const [isOpen, setIsOpen] = useState(false);
-    const menuRef = useRef<HTMLDivElement>(null);
-
-    // Close menu when clicking outside
-    useEffect(() => {
-        function handleClickOutside(event: MouseEvent) {
-            if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-                setIsOpen(false);
-            }
-        }
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => document.removeEventListener('mousedown', handleClickOutside);
-    }, []);
+    const [isDark, setIsDark] = useState(true);
 
     const menuItems = [
-        { name: "Home", path: "/", icon: <Home size={16} /> },
-        { name: "About Me", path: "/about", icon: <User size={16} /> },
-        { name: "Skills", path: "/skills", icon: <Sparkles size={16} /> },
+        { name: "Home", path: "/", active: true },
+        { name: "About", path: "/about", active: false },
+        { name: "Skills", path: "/skills", active: false },
+        { name: "Projects", path: "/projects", active: false },
+        { name: "Contact", path: "/contact", active: false },
     ];
 
     return (
-        <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut", delay: 0.5 }}
-            className="fixed top-8 left-6 md:left-12 z-50 pointer-events-auto"
-            ref={menuRef}
-        >
-            <div className="relative flex items-center gap-6 border border-zinc-800/80 bg-[#0a0a0a]/80 backdrop-blur-xl hover:border-zinc-700 transition-all duration-300 rounded-full px-6 py-3 shadow-2xl">
+        <nav className="fixed top-0 left-0 w-full z-50 pointer-events-auto border-b border-white/5 bg-gradient-to-b from-black/80 to-transparent backdrop-blur-[2px]">
+            <div className="w-full max-w-[1600px] mx-auto px-6 md:px-12 h-20 flex items-center justify-between">
 
-                {/* Brand / Logo - Routes to Home */}
-                <Link to="/" onClick={() => setIsOpen(false)} className="flex items-center gap-4 group cursor-pointer">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="text-[#cda47b] group-hover:scale-110 transition-transform duration-300">
-                        <path d="M12 1L14.5 9.5L23 12L14.5 14.5L12 23L9.5 14.5L1 12L9.5 9.5L12 1Z" fill="currentColor" />
+                {/* Brand / Logo */}
+                <Link to="/" className="flex items-center gap-4 group cursor-pointer">
+                    <svg width="18" height="32" viewBox="0 0 24 40" fill="none" className="text-zinc-400 group-hover:text-[#cda47b] transition-colors duration-500">
+                        <path d="M12 0L13.5 16.5L24 18L13.5 19.5L12 40L10.5 19.5L0 18L10.5 16.5L12 0Z" fill="currentColor" />
                     </svg>
-                    <span className="font-serif text-sm tracking-[0.2em] uppercase text-zinc-200 group-hover:text-white transition-colors duration-300">
-                        Dreamframe
+                    <span className="font-serif text-2xl tracking-widest text-white">
+                        AS
                     </span>
                 </Link>
 
-                {/* Divider */}
-                <div className="w-[1px] h-4 bg-zinc-700"></div>
-
-                {/* Custom Hamburger Button / Toggle */}
-                <button
-                    onClick={() => setIsOpen(!isOpen)}
-                    className="flex flex-col gap-[5px] justify-center w-6 h-6 group cursor-pointer focus:outline-none"
-                    aria-label="Toggle Navigation Menu"
-                >
-                    <span className={`w-5 h-[1.5px] bg-zinc-400 group-hover:bg-[#cda47b] transition-all duration-300 ${isOpen ? 'rotate-45 translate-y-[3.5px]' : ''}`}></span>
-                    <span className={`w-3.5 h-[1.5px] bg-zinc-400 group-hover:bg-[#cda47b] group-hover:w-5 transition-all duration-300 ${isOpen ? '-rotate-45 -translate-y-[3px] !w-5' : ''}`}></span>
-                </button>
-
-                {/* Dropdown Menu Popup */}
-                <AnimatePresence>
-                    {isOpen && (
-                        <motion.div
-                            initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                            animate={{ opacity: 1, y: 0, scale: 1 }}
-                            exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                            transition={{ duration: 0.2, ease: "easeOut" }}
-                            className="absolute top-full left-0 mt-3 w-56 bg-[#0a0a0a]/95 backdrop-blur-2xl border border-zinc-800 rounded-2xl p-2 shadow-2xl flex flex-col gap-1 overflow-hidden"
+                {/* Center Desktop Links */}
+                <div className="hidden md:flex items-center gap-15">
+                    {menuItems.map((item, index) => (
+                        <Link
+                            key={index}
+                            to={item.path}
+                            className="relative py-2 group flex flex-col items-center"
                         >
-                            <div className="px-3 py-2 text-[10px] font-mono uppercase tracking-widest text-zinc-500 border-b border-zinc-800/60 mb-1">
-                                Navigation
-                            </div>
+                            <span className={`font-sans text-sm font-bold tracking-widest transition-colors duration-300 ${item.active ? 'text-[#cda47b]' : 'text-zinc-400 group-hover:text-zinc-200'}`}>
+                                {item.name}
+                            </span>
+                            {/* Active Indicator / Hover effect */}
+                            <div className={`absolute bottom-0 h-[1px] transition-all duration-300 ${item.active ? 'w-full bg-[#cda47b]' : 'w-0 bg-zinc-500 group-hover:w-full'}`} />
+                        </Link>
+                    ))}
+                </div>
 
-                            {menuItems.map((item, index) => (
-                                <Link
-                                    key={index}
-                                    to={item.path}
-                                    onClick={() => setIsOpen(false)}
-                                    className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs tracking-wider text-zinc-300 hover:text-white hover:bg-white/5 transition-all group"
-                                >
-                                    <span className="text-[#cda47b] group-hover:scale-110 transition-transform">
-                                        {item.icon}
-                                    </span>
-                                    <span className="font-medium">{item.name}</span>
-                                </Link>
-                            ))}
-                        </motion.div>
-                    )}
-                </AnimatePresence>
+                {/* Right Controls */}
+                <div className="flex items-center gap-6">
+                    {/* Theme Toggle Pill */}
+                    <div className="hidden md:flex items-center p-1 rounded-full border border-zinc-800 bg-[#0a0a0a]/50 backdrop-blur-md">
+                        <button
+                            onClick={() => setIsDark(false)}
+                            className={`p-1.5 rounded-full transition-all duration-300 ${!isDark ? 'bg-zinc-800 text-white' : 'text-zinc-500 hover:text-zinc-300'}`}
+                        >
+                            <Sun size={14} />
+                        </button>
+                        <button
+                            onClick={() => setIsDark(true)}
+                            className={`p-1.5 rounded-full transition-all duration-300 ${isDark ? 'bg-zinc-800 text-white' : 'text-zinc-500 hover:text-zinc-300'}`}
+                        >
+                            <Moon size={14} />
+                        </button>
+                    </div>
 
+                    {/* Hamburger */}
+                    <button
+                        onClick={() => setIsOpen(!isOpen)}
+                        className="text-zinc-400 hover:text-white transition-colors"
+                    >
+                        <Menu size={24} strokeWidth={1.5} />
+                    </button>
+                </div>
             </div>
-        </motion.div>
+
+            {/* Mobile Menu Overlay */}
+            <AnimatePresence>
+                {isOpen && (
+                    <motion.div
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        className="absolute top-full left-0 w-full bg-[#050505] border-b border-zinc-800/80 p-6 flex flex-col gap-4 md:hidden"
+                    >
+                        {menuItems.map((item, index) => (
+                            <Link
+                                key={index}
+                                to={item.path}
+                                onClick={() => setIsOpen(false)}
+                                className={`font-sans text-sm tracking-widest uppercase ${item.active ? 'text-[#cda47b]' : 'text-zinc-400'}`}
+                            >
+                                {item.name}
+                            </Link>
+                        ))}
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </nav>
     );
 }
