@@ -35,7 +35,7 @@ export function ScrollCanvas({ frameCount = 300, onProgress }: ScrollCanvasProps
             const dy = (ch - dh) / 2;
 
             context.clearRect(0, 0, cw, ch);
-            context.fillStyle = '#000000';
+            context.fillStyle = '#050505'; // Dark-fantasy background base color
             context.fillRect(0, 0, cw, ch);
             context.drawImage(img, 0, 0, iw, ih, dx, dy, dw, dh);
         };
@@ -111,9 +111,18 @@ export function ScrollCanvas({ frameCount = 300, onProgress }: ScrollCanvasProps
     }, [frameCount, onProgress]); // Added onProgress to dependency array
 
     return (
-        <canvas
-            ref={canvasRef}
-            className="absolute inset-0 w-full h-full z-0 pointer-events-none saturate-[1.3] contrast-[1.15]"
-        />
+        <>
+            {/* 
+              COLOR CORRECTION APPLIED VIA TAILWIND FILTERS:
+              These values aim to replicate the desaturated, high-contrast look of the reference image.
+            */}
+            <canvas
+                ref={canvasRef}
+                className="absolute inset-0 w-full h-full z-0 pointer-events-none saturate-[2.5] brightness-[0.8] contrast-[1.1]"
+            />
+
+            {/* Cinematic Left Shadow to ensure Hero Text remains perfectly readable */}
+            <div className="absolute top-0 left-0 h-full w-[45vw] bg-gradient-to-r from-black via-black/50 to-transparent pointer-events-none z-[1]" />
+        </>
     );
 }
