@@ -96,14 +96,14 @@ export function ProjectCarousel() {
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-[#cda47b]">
                         <path d="M12 1L14.5 9.5L23 12L14.5 14.5L12 23L9.5 14.5L1 12L9.5 9.5L12 1Z" fill="currentColor" />
                     </svg>
-                    <h2 className="text-2xl md:text-3xl font-serif text-zinc-200 tracking-widest uppercase">
+                    <h2 style={{ fontFamily: "'Cinzel', serif" }} className="text-2xl md:text-3xl text-zinc-200 tracking-widest uppercase">
                         The Chronicles
                     </h2>
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-[#cda47b] rotate-180">
                         <path d="M12 1L14.5 9.5L23 12L14.5 14.5L12 23L9.5 14.5L1 12L9.5 9.5L12 1Z" fill="currentColor" />
                     </svg>
                 </div>
-                <p className="text-zinc-500 text-sm">
+                <p style={{ fontFamily: "'Cormorant Garamond', serif" }} className="text-zinc-500 text-sm md:text-base">
                     Select works forged in the depths of code.
                 </p>
             </div>
@@ -131,7 +131,6 @@ export function ProjectCarousel() {
                                     duration: 0.6,
                                     ease: [0.16, 1, 0.3, 1]
                                 }}
-
                                 className="absolute w-[280px] sm:w-[380px] h-[500px] md:h-[540px] rounded-[15px] overflow-hidden bg-[#080808] border border-zinc-800/80 shadow-2xl flex flex-col group hover:border-[#cda47b]/50 hover:shadow-[0_15px_40px_rgba(205,164,123,0.15)] transition-colors transition-shadow duration-500 cursor-pointer"
                                 style={{ transformOrigin: 'center center' }}
                             >
@@ -143,7 +142,7 @@ export function ProjectCarousel() {
                                     <div className="absolute inset-0 bg-gradient-to-t from-[#080808] via-transparent to-transparent opacity-90 group-hover:opacity-70 transition-opacity duration-500" />
 
                                     <div className="absolute top-5 left-5 px-3 py-1.5 rounded-lg bg-[#050505]/80 border border-zinc-800/60 backdrop-blur-md group-hover:border-[#cda47b]/30 transition-colors duration-500">
-                                        <span className="text-[9px] tracking-[0.2em] uppercase font-mono text-[#cda47b]">
+                                        <span style={{ fontFamily: "'JetBrains Mono', monospace" }} className="text-[9px] tracking-[0.2em] uppercase text-[#cda47b]">
                                             {project.category}
                                         </span>
                                     </div>
@@ -151,10 +150,10 @@ export function ProjectCarousel() {
 
                                 <div className="flex-1 p-6 flex flex-col justify-between relative z-10 bg-[#080808]">
                                     <div>
-                                        <h3 className="text-2xl font-serif text-zinc-100 mb-3 group-hover:text-[#cda47b] transition-colors duration-500">
+                                        <h3 style={{ fontFamily: "'Cinzel', serif" }} className="text-2xl text-zinc-100 mb-3 group-hover:text-[#cda47b] transition-colors duration-500">
                                             {project.title}
                                         </h3>
-                                        <p className="text-sm text-zinc-400 font-light line-clamp-3 leading-relaxed group-hover:text-zinc-300 transition-colors duration-500">
+                                        <p style={{ fontFamily: "'Cormorant Garamond', serif" }} className="text-base text-zinc-400 font-light line-clamp-3 leading-relaxed group-hover:text-zinc-300 transition-colors duration-500">
                                             {project.desc}
                                         </p>
                                     </div>
@@ -162,7 +161,7 @@ export function ProjectCarousel() {
                                     <div className="flex flex-col gap-4 mt-6 pt-5 border-t border-zinc-800/60 group-hover:border-[#cda47b]/20 transition-colors duration-500">
                                         <div className="flex flex-wrap gap-x-2 gap-y-1">
                                             {project.tech.map((t, i) => (
-                                                <span key={i} className="text-[10px] uppercase tracking-widest text-zinc-500 font-mono group-hover:text-[#cda47b]/80 transition-colors duration-500">
+                                                <span style={{ fontFamily: "'JetBrains Mono', monospace" }} key={i} className="text-[10px] uppercase tracking-widest text-zinc-500 group-hover:text-[#cda47b]/80 transition-colors duration-500">
                                                     {t}{i < project.tech.length - 1 ? <span className="text-zinc-700 ml-2">•</span> : ''}
                                                 </span>
                                             ))}
